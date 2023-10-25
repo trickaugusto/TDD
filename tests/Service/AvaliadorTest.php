@@ -15,10 +15,11 @@ class AvaliadorTest extends TestCase
     /**
      * Esse método executa primeiro de tudo, é basicamente um constructor
      */
-    public function setUp(): void {
+    public function setUp(): void
+    {
         self::$leiloeiro = new Avaliador();
     }
-    
+
     /**
      * @dataProvider leilaoEmOrdemAleatoria
      * @dataProvider leilaoEmOrdemCrescente
@@ -50,7 +51,7 @@ class AvaliadorTest extends TestCase
      * @dataProvider leilaoEmOrdemCrescente
      * @dataProvider leilaoEmOrdemDecrescente
      */
-    public static function testAvaliadorDeveBuscarOsTresMaioresValores(Leilao $leilao) 
+    public static function testAvaliadorDeveBuscarOsTresMaioresValores(Leilao $leilao)
     {
         self::$leiloeiro->avalia($leilao);
 
@@ -74,7 +75,11 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($joao, 2000));
         $leilao->recebeLance(new Lance($maria, 2500));
 
-        return [[$leilao]];
+        return [
+            'ordem-crescente' => [
+                $leilao
+            ]
+        ];
     }
 
     public static function leilaoEmOrdemDecrescente()
@@ -89,7 +94,11 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($joao, 2000));
         $leilao->recebeLance(new Lance($ana, 1700));
 
-        return [[$leilao]];
+        return [
+            'ordem-decrescente' => [
+                $leilao
+            ]
+        ];
     }
 
     public static function leilaoEmOrdemAleatoria()
@@ -104,6 +113,10 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($maria, 2500));
         $leilao->recebeLance(new Lance($joao, 2000));
 
-        return [[$leilao]];
+        return [
+            'ordem-aleatoria' => [
+                $leilao
+            ]
+        ];
     }
 }
