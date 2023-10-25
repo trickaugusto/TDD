@@ -53,6 +53,5 @@ Método executado uma vez só, após todos os testes da classe
 public static function tearDownAfterClass(): void
 ```
 
-
 Para ter mais detalhes e ver alguns exemplos práticos, você pode conferir a [documentação](https://docs.phpunit.de/en/8.5/fixtures.html)
  desta feature do PHPUnit.
