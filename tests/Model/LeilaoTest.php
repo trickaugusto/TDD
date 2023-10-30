@@ -53,7 +53,6 @@ class LeilaoTest extends TestCase
 
     public function testeLeilaoNaoDeveAceitarMaisDe5LancesPorUsuario() 
     {
-        /** pendente a implementação do código */
         $leilao = new Leilao('Brasília Amarela');
         $joao = new Usuario('João');
         $maria = new Usuario('Maria');
