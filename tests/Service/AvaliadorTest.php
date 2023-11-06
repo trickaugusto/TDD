@@ -10,14 +10,15 @@ use PHPUnit\Framework\TestCase;
 
 class AvaliadorTest extends TestCase
 {
-    private static $leiloeiro;
+    /** @var Avaliador */
+    private $leiloeiro;
 
     /**
      * Esse método executa primeiro de tudo, é basicamente um constructor
      */
     public function setUp(): void
     {
-        self::$leiloeiro = new Avaliador();
+        $this->leiloeiro = new Avaliador();
     }
 
     /**
@@ -25,12 +26,12 @@ class AvaliadorTest extends TestCase
      * @dataProvider leilaoEmOrdemCrescente
      * @dataProvider leilaoEmOrdemDecrescente
      */
-    public static function testAvaliadorDeveEncontrarOMaiorValorDeLances(Leilao $leilao)
+    public function testAvaliadorDeveEncontrarOMaiorValorDeLances(Leilao $leilao)
     {
-        self::$leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $maiorValor = self::$leiloeiro->getMaiorValor();
-        self::assertEquals(2500, $maiorValor);
+        $maiorValor = $this->leiloeiro->getMaiorValor();
+        $this->assertEquals(2500, $maiorValor);
     }
 
     /**
@@ -38,12 +39,12 @@ class AvaliadorTest extends TestCase
      * @dataProvider leilaoEmOrdemCrescente
      * @dataProvider leilaoEmOrdemDecrescente
      */
-    public static function testAvaliadorDeveEncontrarOMenorValorDeLances(Leilao $leilao)
+    public function testAvaliadorDeveEncontrarOMenorValorDeLances(Leilao $leilao)
     {
-        self::$leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $menorValor = self::$leiloeiro->getMenorValor();
-        self::assertEquals(1700, $menorValor);
+        $menorValor = $this->leiloeiro->getMenorValor();
+        $this->assertEquals(1700, $menorValor);
     }
 
     /**
@@ -51,15 +52,25 @@ class AvaliadorTest extends TestCase
      * @dataProvider leilaoEmOrdemCrescente
      * @dataProvider leilaoEmOrdemDecrescente
      */
-    public static function testAvaliadorDeveBuscarOsTresMaioresValores(Leilao $leilao)
+    public function testAvaliadorDeveBuscarOsTresMaioresValores(Leilao $leilao)
     {
-        self::$leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $maiores = self::$leiloeiro->getMaioresLances();
-        static::assertCount(3, $maiores);
-        static::assertEquals(2500, $maiores[0]->getValor());
-        static::assertEquals(2000, $maiores[1]->getValor());
-        static::assertEquals(1700, $maiores[2]->getValor());
+        $maiores = $this->leiloeiro->getMaioresLances();
+        $this->assertCount(3, $maiores);
+        $this->assertEquals(2500, $maiores[0]->getValor());
+        $this->assertEquals(2000, $maiores[1]->getValor());
+        $this->assertEquals(1700, $maiores[2]->getValor());
+    }
+
+    public function testLeilaoVazioNaoPodeSerAvaliado()
+    {
+        $leilao = new Leilao('Fusca Azul');
+        
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Não é possível avaliar um leilão vazio');
+
+        $this->leiloeiro->avalia($leilao);
     }
 
     /** ------------------------ DATA PROVIDERS ------------------------ */
