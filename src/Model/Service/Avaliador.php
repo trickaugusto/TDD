@@ -17,6 +17,10 @@ class Avaliador
             throw new \DomainException('Não é possível avaliar um leilão vazio');
         }
 
+        if ($leilao->isFinalizado()) {
+            throw new \DomainException('Leilão já finalizado');
+        }
+
         foreach ($leilao->getLances() as $lance) {
             if ($lance->getValor() > $this->maiorValor) {
                 $this->maiorValor = $lance->getValor();
